@@ -1,4 +1,4 @@
-# Setter
+# WordPress Page
 
 ## Description
 
@@ -41,5 +41,5 @@ Instantiate a new WordPress page and use thus:
     if ( $wp_page->is( 'post_type_archive', 'tutorial' ) ) {
         echo 'Yay!!! Tutorials.';
     } else {
-        echo 'Nope :-)';
+        echo 'Nope :(';
     }

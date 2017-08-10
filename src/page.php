@@ -28,7 +28,7 @@ class Page {
      * @since 0.1.0
      * @access public
      * 
-     * @return array Template tags applicable to this page.
+     * @return array Page type.
      */
     public function type() {
         $return = [];
@@ -64,12 +64,12 @@ class Page {
         }
 
         if ( $this->is( 'search' ) ) {
-            return \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-template' ),
+            return \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-page' ),
                 \get_search_query() );
         }
 
         if ( $this->is( '404' ) ) {
-            return \esc_html__( 'Not found', 'wordpress-template' );
+            return \esc_html__( 'Not found', 'wordpress-page' );
         }
 
         return '';
@@ -93,6 +93,34 @@ class Page {
         }
 
         return '';
+    }
+
+    /**
+     * Current page URL
+     *
+     * @var boolean $query_string Append query string?
+     *
+     * @since 0.1.0
+     * @access public
+     *
+     * @return string URL of page we're currently on.
+     */
+    public function url( $query_string = false ) {
+        $query_string = ( bool ) $query_string;
+        $home_url = home_url();
+
+        $parsed = wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );
+
+        $path = isset( $parsed['path'] ) ? $parsed['path'] : '';
+        $query = isset( $parsed['query'] ) ? '?' . $parsed['query'] : '';
+    
+        $page_url = $home_url . $path;
+    
+        if ( $query_string ) {
+            $page_url .= $query;
+        }
+    
+        return esc_url_raw( $page_url );
     }
 
     /**
@@ -138,7 +166,7 @@ class Page {
      * @since 0.1.0
      * @access protected
      *
-     * @return array Template types
+     * @return array page types
      */
     protected function types() {
         return [

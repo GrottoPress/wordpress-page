@@ -24,7 +24,7 @@ use GrottoPress\WordPress\Page\Page;
 class Page_Test extends \WP_UnitTestCase {
     private $post_ids;
     private $tutorial_ids;
-    private $pagination;
+    private $page;
 
     public function setUp() {
         \register_post_type( 'tutorial', [
@@ -70,6 +70,8 @@ class Page_Test extends \WP_UnitTestCase {
 
         parent::setUp();
     }
+
+    // ----------
 
 	public function test_current_page_type_valid_on_home() {
 		$url = \home_url( '/' );
@@ -153,6 +155,64 @@ class Page_Test extends \WP_UnitTestCase {
         $this->go_to( $url );
         $this->assertSame( [ 'author', 'archive' ], $this->page->type() );
     }
+
+    // ----------
+
+    public function test_current_page_url_valid_on_home() {
+        $url = \home_url( '/' );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    public function test_current_page_url_valid_on_post_type_archive() {
+        $post_id = $this->post_ids[ \array_rand( $this->post_ids ) ];
+
+        $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    public function test_current_page_url_valid_on_custom_post_type_archive() {
+        $post_id = $this->tutorial_ids[ \array_rand( $this->tutorial_ids ) ];
+
+        $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    public function test_current_page_url_valid_on_single_post() {
+        $post_id = $this->post_ids[ \array_rand( $this->post_ids ) ];
+
+        $url = \get_permalink( $post_id );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    public function test_current_page_url_valid_on_single_custom_post() {
+        $post_id = $this->tutorial_ids[ \array_rand( $this->tutorial_ids ) ];
+
+        $url = \get_permalink( $post_id );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    public function test_current_page_url_valid_on_category_archive() {
+        $post_id = $this->post_ids[ \array_rand( $this->post_ids ) ];
+
+        $url = \get_term_link( 1, 'category' );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    public function test_current_page_url_valid_on_custom_tax_term_archive() {
+        $post_id = $this->tutorial_ids[ \array_rand( $this->tutorial_ids ) ];
+
+        $url = \get_term_link( 'basic', 'level' );
+        $this->go_to( $url );
+        $this->assertSame( $url, $this->page->url( true ) );
+    }
+
+    // ----------
 
     public function test_page_description_works_on_single_custom_post() {
         $post_id = $this->tutorial_ids[ \array_rand( $this->tutorial_ids ) ];

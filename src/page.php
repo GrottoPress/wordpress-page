@@ -14,7 +14,7 @@
 
 namespace GrottoPress\WordPress\Page;
 
-if ( defined( 'WPINC' ) ) :
+if ( \defined( 'WPINC' ) ) :
 
 /**
  * WordPress Page.
@@ -107,9 +107,9 @@ class Page {
      */
     public function url( $query_string = false ) {
         $query_string = ( bool ) $query_string;
-        $home_url = home_url();
+        $home_url = \home_url();
 
-        $parsed = wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );
+        $parsed = \wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );
 
         $path = isset( $parsed['path'] ) ? $parsed['path'] : '';
         $query = isset( $parsed['query'] ) ? '?' . $parsed['query'] : '';
@@ -120,7 +120,7 @@ class Page {
             $page_url .= $query;
         }
     
-        return esc_url_raw( $page_url );
+        return \esc_url_raw( $page_url );
     }
 
     /**

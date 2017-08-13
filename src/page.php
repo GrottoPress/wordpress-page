@@ -12,9 +12,11 @@
  * @author N Atta Kus Adusei (https://twitter.com/akadusei)
  */
 
+declare ( strict_types = 1 );
+
 namespace GrottoPress\WordPress\Page;
 
-if ( defined( 'WPINC' ) ) :
+if ( \defined( 'WPINC' ) ) :
 
 /**
  * WordPress Page.
@@ -28,9 +30,9 @@ class Page {
      * @since 0.1.0
      * @access public
      * 
-     * @return array Template tags applicable to this page.
+     * @return array Page type.
      */
-    public function type() {
+    public function type(): array {
         $return = [];
         
         if ( ! ( $types = $this->types() ) ) {
@@ -54,7 +56,7 @@ class Page {
      * 
      * @return string Page title
      */
-    public function title() {
+    public function title(): string {
         if ( $this->is( 'singular' ) ) {
             return \single_post_title( '', false );
         }
@@ -64,12 +66,12 @@ class Page {
         }
 
         if ( $this->is( 'search' ) ) {
-            return \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-template' ),
+            return \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-page' ),
                 \get_search_query() );
         }
 
         if ( $this->is( '404' ) ) {
-            return \esc_html__( 'Not found', 'wordpress-template' );
+            return \esc_html__( 'Not found', 'wordpress-page' );
         }
 
         return '';
@@ -83,7 +85,7 @@ class Page {
      *
      * @return string Description.
      */
-    public function description() {
+    public function description(): string {
         if ( $this->is( 'singular' ) ) {
             return \get_the_excerpt();
         }
@@ -96,6 +98,33 @@ class Page {
     }
 
     /**
+     * Current page URL
+     *
+     * @var boolean $query_string Append query string?
+     *
+     * @since 0.1.0
+     * @access public
+     *
+     * @return string URL of page we're currently on.
+     */
+    public function url( bool $query_string = false ): string {
+        $home_url = \home_url();
+
+        $parsed = \wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );
+
+        $path = isset( $parsed['path'] ) ? $parsed['path'] : '';
+        $query = isset( $parsed['query'] ) ? '?' . $parsed['query'] : '';
+    
+        $page_url = $home_url . $path;
+    
+        if ( $query_string ) {
+            $page_url .= $query;
+        }
+    
+        return \esc_url_raw( $page_url );
+    }
+
+    /**
      * Are we on a particular page type?
      * 
      * @var string $type Page name/slug
@@ -105,7 +134,7 @@ class Page {
      *
      * @return boolean Whether or not current page is of a given type.
      */
-    public function is( $type ) {
+    public function is( string $type ): bool {
         if ( ! \in_array( $type, $this->types() ) ) {
             return false;
         }
@@ -138,9 +167,9 @@ class Page {
      * @since 0.1.0
      * @access protected
      *
-     * @return array Template types
+     * @return array page types
      */
-    protected function types() {
+    protected function types(): array {
         return [
             'home',
             'front_page',

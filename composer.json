@@ -1,6 +1,6 @@
 {
     "name": "grottopress/wordpress-page",
-    "description": "A simple library to get WordPress page elements",
+    "description": "A library to get WordPress page elements",
     "license": "MIT",
     "authors": [
         {

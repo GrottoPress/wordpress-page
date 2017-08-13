@@ -108,7 +108,6 @@ class Page {
      * @return string URL of page we're currently on.
      */
     public function url( bool $query_string = false ): string {
-        $query_string = ( bool ) $query_string;
         $home_url = \home_url();
 
         $parsed = \wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );

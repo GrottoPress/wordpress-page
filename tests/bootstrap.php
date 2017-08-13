@@ -10,6 +10,8 @@
  * @author N Atta Kus Adusei (https://twitter.com/akadusei)
  */
 
+declare ( strict_types = 1 );
+
 $_tests_dir = \getenv( 'WP_TESTS_DIR' );
 
 if ( ! $_tests_dir ) {

@@ -12,6 +12,8 @@
  * @author N Atta Kus Adusei (https://twitter.com/akadusei)
  */
 
+declare ( strict_types = 1 );
+
 namespace GrottoPress\WordPress\Page\Tests;
 
 use GrottoPress\WordPress\Page\Page;

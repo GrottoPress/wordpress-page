@@ -12,6 +12,8 @@
  * @author N Atta Kus Adusei (https://twitter.com/akadusei)
  */
 
+declare ( strict_types = 1 );
+
 namespace GrottoPress\WordPress\Page;
 
 if ( \defined( 'WPINC' ) ) :
@@ -30,7 +32,7 @@ class Page {
      * 
      * @return array Page type.
      */
-    public function type() {
+    public function type(): array {
         $return = [];
         
         if ( ! ( $types = $this->types() ) ) {
@@ -54,7 +56,7 @@ class Page {
      * 
      * @return string Page title
      */
-    public function title() {
+    public function title(): string {
         if ( $this->is( 'singular' ) ) {
             return \single_post_title( '', false );
         }
@@ -83,7 +85,7 @@ class Page {
      *
      * @return string Description.
      */
-    public function description() {
+    public function description(): string {
         if ( $this->is( 'singular' ) ) {
             return \get_the_excerpt();
         }
@@ -105,7 +107,7 @@ class Page {
      *
      * @return string URL of page we're currently on.
      */
-    public function url( $query_string = false ) {
+    public function url( bool $query_string = false ): string {
         $query_string = ( bool ) $query_string;
         $home_url = \home_url();
 
@@ -133,7 +135,7 @@ class Page {
      *
      * @return boolean Whether or not current page is of a given type.
      */
-    public function is( $type ) {
+    public function is( string $type ): bool {
         if ( ! \in_array( $type, $this->types() ) ) {
             return false;
         }
@@ -168,7 +170,7 @@ class Page {
      *
      * @return array page types
      */
-    protected function types() {
+    protected function types(): array {
         return [
             'home',
             'front_page',

@@ -21,7 +21,7 @@
         "source": "https://github.com/GrottoPress/wordpress-page/"
     },
     "require": {
-        "php": ">=5.4"
+        "php": ">=7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.3",

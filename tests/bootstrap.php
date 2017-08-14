@@ -12,6 +12,13 @@
 
 declare ( strict_types = 1 );
 
+/**
+ * Autoloader
+ *
+ * @since 0.1.0
+ */
+require_once \dirname( __DIR__ ) . '/vendor/autoload.php';
+
 $_tests_dir = \getenv( 'WP_TESTS_DIR' );
 
 if ( ! $_tests_dir ) {
@@ -35,10 +42,3 @@ function _manually_load_plugin() {
  * Start up the WP testing environment.
  */
 require $_tests_dir . '/includes/bootstrap.php';
-
-/**
- * Autoloader
- *
- * @since 0.1.0
- */
-require_once \dirname( __DIR__ ) . '/vendor/autoload.php';

@@ -189,6 +189,7 @@ class Page {
             'archive',
             '404',
             'search',
+            'paged',
             'embed',
             'customize_preview',
             'admin',

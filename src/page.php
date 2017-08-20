@@ -3,7 +3,8 @@
 /**
  * WordPress Page.
  *
- * Page as in 'web page', NOT the page post type in WordPress.
+ * Page as used here refers to 'web page',
+ * NOT the page post type in WordPress.
  *
  * @package GrottoPress\WordPress\Page
  * @since 0.1.0

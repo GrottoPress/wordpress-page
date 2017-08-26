@@ -41,7 +41,7 @@ class Page {
      * @since 0.1.0
      * @access protected
      * 
-     * @var array $title Page title.
+     * @var string $title Page title.
      */
     protected $title = null;
 
@@ -51,7 +51,7 @@ class Page {
      * @since 0.1.0
      * @access protected
      * 
-     * @var array $description Page description.
+     * @var string $description Page description.
      */
     protected $description = null;
 
@@ -61,7 +61,7 @@ class Page {
      * @since 0.1.0
      * @access protected
      * 
-     * @var array $url Page URL.
+     * @var string $url Page URL.
      */
     protected $url = null;
 
@@ -80,16 +80,14 @@ class Page {
 
         $return = [];
         
-        if ( ! ( $types = $this->types() ) ) {
-            return ( $this->type = $return );
-        }
-        
-        foreach ( $types as $type ) {
-            if ( $this->is( $type ) ) {
-                $return[] = $type;
+        if ( ( $types = $this->types() ) ) {
+            foreach ( $types as $type ) {
+                if ( $this->is( $type ) ) {
+                    $return[] = $type;
+                }
             }
         }
-        
+
         return ( $this->type = $return );
     }
 

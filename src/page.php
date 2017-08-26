@@ -26,6 +26,46 @@ if ( \defined( 'WPINC' ) ) :
  */
 class Page {
     /**
+     * Type
+     *
+     * @since 0.1.0
+     * @access protected
+     * 
+     * @var array $type Page type.
+     */
+    protected $type = null;
+
+    /**
+     * Title
+     *
+     * @since 0.1.0
+     * @access protected
+     * 
+     * @var array $title Page title.
+     */
+    protected $title = null;
+
+    /**
+     * Description
+     *
+     * @since 0.1.0
+     * @access protected
+     * 
+     * @var array $description Page description.
+     */
+    protected $description = null;
+
+    /**
+     * URL
+     *
+     * @since 0.1.0
+     * @access protected
+     * 
+     * @var array $url Page URL.
+     */
+    protected $url = null;
+
+    /**
      * Get page type
      * 
      * @since 0.1.0
@@ -34,10 +74,14 @@ class Page {
      * @return array Page type.
      */
     public function type(): array {
+        if ( null !== $this->type ) {
+            return $this->type;
+        }
+
         $return = [];
         
         if ( ! ( $types = $this->types() ) ) {
-            return $return;
+            return ( $this->type = $return );
         }
         
         foreach ( $types as $type ) {
@@ -46,7 +90,7 @@ class Page {
             }
         }
         
-        return $return;
+        return ( $this->type = $return );
     }
 
     /**
@@ -58,24 +102,28 @@ class Page {
      * @return string Page title
      */
     public function title(): string {
+        if ( null !== $this->title ) {
+            return $this->title;
+        }
+
         if ( $this->is( 'singular' ) ) {
-            return \single_post_title( '', false );
+            return ( $this->title = \single_post_title( '', false ) );
         }
 
         if ( $this->is( 'archive' ) ) {
-            return \get_the_archive_title();
+            return ( $this->title = \get_the_archive_title() );
         }
 
         if ( $this->is( 'search' ) ) {
-            return \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-page' ),
-                \get_search_query() );
+            return ( $this->title = \sprintf( \esc_html__( 'Search results: "%s"',
+                'wordpress-page' ), \get_search_query() ) );
         }
 
         if ( $this->is( '404' ) ) {
-            return \esc_html__( 'Not found', 'wordpress-page' );
+            return ( $this->title = \esc_html__( 'Not found', 'wordpress-page' ) );
         }
 
-        return '';
+        return ( $this->title = '' );
     }
 
     /**
@@ -87,15 +135,19 @@ class Page {
      * @return string Description.
      */
     public function description(): string {
+        if ( null !== $this->description ) {
+            return $this->description;
+        }
+
         if ( $this->is( 'singular' ) ) {
-            return \get_the_excerpt();
+            return ( $this->description = \get_the_excerpt() );
         }
 
         if ( $this->is( 'archive' ) ) {
-            return \get_the_archive_description();
+            return ( $this->description = \get_the_archive_description() );
         }
 
-        return '';
+        return ( $this->description = '' );
     }
 
     /**
@@ -109,6 +161,10 @@ class Page {
      * @return string URL of page we're currently on.
      */
     public function url( bool $query_string = false ): string {
+        if ( null !== $this->url ) {
+            return $this->url;
+        }
+
         $home_url = \home_url();
 
         $parsed = \wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );
@@ -122,7 +178,7 @@ class Page {
             $page_url .= $query;
         }
     
-        return \esc_url_raw( $page_url );
+        return ( $this->url = \esc_url_raw( $page_url ) );
     }
 
     /**

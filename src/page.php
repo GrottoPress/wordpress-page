@@ -74,21 +74,19 @@ class Page {
      * @return array Page type.
      */
     public function type(): array {
-        if ( null !== $this->type ) {
-            return $this->type;
-        }
+        if ( null === $this->type ) {
+            if ( ! ( $types = $this->types() ) ) {
+                return [];
+            }
 
-        $return = [];
-        
-        if ( ( $types = $this->types() ) ) {
             foreach ( $types as $type ) {
                 if ( $this->is( $type ) ) {
-                    $return[] = $type;
+                    $this->type[] = $type;
                 }
             }
         }
 
-        return ( $this->type = $return );
+        return $this->type;
     }
 
     /**
@@ -100,28 +98,21 @@ class Page {
      * @return string Page title
      */
     public function title(): string {
-        if ( null !== $this->title ) {
-            return $this->title;
+        if ( null === $this->title ) {
+            $this->title = '';
+
+            if ( $this->is( 'singular' ) ) {
+                $this->title = \single_post_title( '', false );
+            } elseif ( $this->is( 'archive' ) ) {
+                $this->title = \get_the_archive_title();
+            } elseif ( $this->is( 'search' ) ) {
+                $this->title = \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-page' ), \get_search_query() );
+            } elseif ( $this->is( '404' ) ) {
+                $this->title = \esc_html__( 'Not found', 'wordpress-page' );
+            }
         }
 
-        if ( $this->is( 'singular' ) ) {
-            return ( $this->title = \single_post_title( '', false ) );
-        }
-
-        if ( $this->is( 'archive' ) ) {
-            return ( $this->title = \get_the_archive_title() );
-        }
-
-        if ( $this->is( 'search' ) ) {
-            return ( $this->title = \sprintf( \esc_html__( 'Search results: "%s"',
-                'wordpress-page' ), \get_search_query() ) );
-        }
-
-        if ( $this->is( '404' ) ) {
-            return ( $this->title = \esc_html__( 'Not found', 'wordpress-page' ) );
-        }
-
-        return ( $this->title = '' );
+        return $this->title;
     }
 
     /**
@@ -133,19 +124,17 @@ class Page {
      * @return string Description.
      */
     public function description(): string {
-        if ( null !== $this->description ) {
-            return $this->description;
+        if ( null === $this->description ) {
+            $this->description = '';
+
+            if ( $this->is( 'singular' ) ) {
+                $this->description = \get_the_excerpt();
+            } elseif ( $this->is( 'archive' ) ) {
+                $this->description = \get_the_archive_description();
+            }
         }
 
-        if ( $this->is( 'singular' ) ) {
-            return ( $this->description = \get_the_excerpt() );
-        }
-
-        if ( $this->is( 'archive' ) ) {
-            return ( $this->description = \get_the_archive_description() );
-        }
-
-        return ( $this->description = '' );
+        return $this->description;
     }
 
     /**
@@ -159,24 +148,22 @@ class Page {
      * @return string URL of page we're currently on.
      */
     public function url( bool $query_string = false ): string {
-        if ( null !== $this->url ) {
-            return $this->url;
-        }
+        if ( null === $this->url ) {
+            $parsed = \wp_parse_url( ( $home_url = \home_url() ) . $_SERVER['REQUEST_URI'] );
 
-        $home_url = \home_url();
+            $path = $parsed['path'] ?? '';
+            $query = isset( $parsed['query'] ) ? '?' . $parsed['query'] : '';
+        
+            $this->url = $home_url . $path;
+        
+            if ( $query_string ) {
+                $this->url .= $query;
+            }
 
-        $parsed = \wp_parse_url( $home_url . $_SERVER['REQUEST_URI'] );
-
-        $path = isset( $parsed['path'] ) ? $parsed['path'] : '';
-        $query = isset( $parsed['query'] ) ? '?' . $parsed['query'] : '';
-    
-        $page_url = $home_url . $path;
-    
-        if ( $query_string ) {
-            $page_url .= $query;
+            $this->url = \esc_url_raw( $this->url );
         }
     
-        return ( $this->url = \esc_url_raw( $page_url ) );
+        return $this->url;
     }
 
     /**

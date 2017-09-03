@@ -9,8 +9,8 @@
  * @package GrottoPress\WordPress\Page
  * @since 0.1.0
  *
- * @author GrottoPress (https://www.grottopress.com)
- * @author N Atta Kus Adusei (https://twitter.com/akadusei)
+ * @author GrottoPress <info@grottopress.com>
+ * @author N Atta Kus Adusei
  */
 
 declare ( strict_types = 1 );
@@ -140,7 +140,7 @@ class Page {
     /**
      * Current page URL
      *
-     * @var boolean $query_string Append query string?
+     * @param boolean $query_string Append query string?
      *
      * @since 0.1.0
      * @access public
@@ -169,7 +169,7 @@ class Page {
     /**
      * Are we on a particular page type?
      * 
-     * @var string $type Page name/slug
+     * @param string $type Page name/slug
      * 
      * @since Jentil 0.1.0
      * @access public

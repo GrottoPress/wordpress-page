@@ -66,6 +66,16 @@ class Page {
     protected $url = null;
 
     /**
+     * Number
+     *
+     * @since 0.1.0
+     * @access protected
+     * 
+     * @var int $number Current page number.
+     */
+    protected $number = null;
+
+    /**
      * Get page type
      * 
      * @since 0.1.0
@@ -164,6 +174,26 @@ class Page {
         }
     
         return $this->url;
+    }
+
+    /**
+     * Current page number
+     *
+     * @since 0.1.0
+     * @access public
+     *
+     * @return int Current page number.
+     */
+    public function number(): int {
+        if ( null === $this->number ) {
+            if ( ( $number = absint( \get_query_var( 'paged' ) ) ) ) {
+                $this->number = $number;
+            } else {
+                $this->number = 1;
+            }
+        }
+    
+        return $this->number;
     }
 
     /**

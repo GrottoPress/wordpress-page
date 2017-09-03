@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Prevented multiple calls to database when methods called multiple times.
 
+## Unreleased 0.2.1 - 
+### Added
+- Added ability to retrieve current page number.
+
 ## 0.2.0 - 2017-08-13
 ### Changed
 - Requires PHP version 7.0 and newer

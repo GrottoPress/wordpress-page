@@ -3,13 +3,12 @@
 /**
  * Pagination Tests
  *
- * @package GrottoPress\WordPress\Page
- * @subpackage GrottoPress\WordPress\Page\Tests
+ * @package GrottoPress\WordPress\Page\Tests
  *
  * @since 0.1.0
  *
- * @author GrottoPress (https://www.grottopress.com)
- * @author N Atta Kus Adusei (https://twitter.com/akadusei)
+ * @author GrottoPress <info@grottopress.com>
+ * @author N Atta Kus Adusei
  */
 
 declare ( strict_types = 1 );
@@ -26,9 +25,10 @@ use GrottoPress\WordPress\Page\Page;
 class Page_Test extends \WP_UnitTestCase {
     private $post_ids;
     private $tutorial_ids;
-    private $page;
-
+    
     public function setUp() {
+        parent::setUp();
+
         \register_post_type( 'tutorial', [
             'public' => true,
             'has_archive' => true,
@@ -67,10 +67,6 @@ class Page_Test extends \WP_UnitTestCase {
         ] );
 
         $this->user_ids = $this->factory->user->create_many( 12 );
-
-        $this->page = new Page();
-
-        parent::setUp();
     }
 
     // ----------
@@ -79,18 +75,18 @@ class Page_Test extends \WP_UnitTestCase {
 		$url = \home_url( '/' );
         $this->go_to( $url );
         // WP test case seems buggy: is_front_page() return false on homepage
-        // $this->assertSame( [ 'home', 'front_page' ], $this->page->type() );
+        // $this->assertSame( [ 'home', 'front_page' ], ( new Page() )->type() );
 
         $post_id = $this->page_ids[0];
         \update_option( 'show_on_front', 'page' );
         \update_option( 'page_on_front', $post_id );
         $this->go_to( $url );
-        $this->assertSame( [ 'front_page', 'page', 'singular' ], $this->page->type() );
+        $this->assertSame( [ 'front_page', 'page', 'singular' ], ( new Page() )->type() );
 
         $posts_page_id = $this->page_ids[1];
         \update_option( 'page_for_posts', $posts_page_id );
         $this->go_to( get_permalink( $posts_page_id ) );
-        $this->assertSame( [ 'home' ], $this->page->type() );
+        $this->assertSame( [ 'home' ], ( new Page() )->type() );
 	}
 
     public function test_current_page_type_valid_on_post_type_archive() {
@@ -98,7 +94,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
         $this->go_to( $url );
-        $this->assertSame( [ 'home' ], $this->page->type() );
+        $this->assertSame( [ 'home' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_custom_post_type_archive() {
@@ -106,8 +102,8 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
         $this->go_to( $url );
-        $this->assertTrue( $this->page->is( 'post_type_archive', 'tutorial' ) );
-        $this->assertSame( [ 'post_type_archive', 'archive' ], $this->page->type() );
+        $this->assertTrue( ( new Page() )->is( 'post_type_archive', 'tutorial' ) );
+        $this->assertSame( [ 'post_type_archive', 'archive' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_single_post() {
@@ -115,7 +111,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_permalink( $post_id );
         $this->go_to( $url );
-        $this->assertSame( [ 'single', 'singular' ], $this->page->type() );
+        $this->assertSame( [ 'single', 'singular' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_single_attahment() {
@@ -123,7 +119,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_permalink( $post_id );
         $this->go_to( $url );
-        $this->assertSame( [ 'single', 'attachment', 'singular' ], $this->page->type() );
+        $this->assertSame( [ 'single', 'attachment', 'singular' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_single_custom_post() {
@@ -131,7 +127,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_permalink( $post_id );
         $this->go_to( $url );
-        $this->assertSame( [ 'single', 'singular' ], $this->page->type() );
+        $this->assertSame( [ 'single', 'singular' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_category_archive() {
@@ -139,7 +135,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_term_link( 1, 'category' );
         $this->go_to( $url );
-        $this->assertSame( [ 'category', 'archive' ], $this->page->type() );
+        $this->assertSame( [ 'category', 'archive' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_custom_tax_term_archive() {
@@ -147,7 +143,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_term_link( 'basic', 'level' );
         $this->go_to( $url );
-        $this->assertSame( [ 'tax', 'archive' ], $this->page->type() );
+        $this->assertSame( [ 'tax', 'archive' ], ( new Page() )->type() );
     }
 
     public function test_current_page_type_valid_on_author_archive() {
@@ -155,7 +151,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_author_posts_url( $user_id );
         $this->go_to( $url );
-        $this->assertSame( [ 'author', 'archive' ], $this->page->type() );
+        $this->assertSame( [ 'author', 'archive' ], ( new Page() )->type() );
     }
 
     // ----------
@@ -163,7 +159,7 @@ class Page_Test extends \WP_UnitTestCase {
     public function test_current_page_url_valid_on_home() {
         $url = \home_url( '/' );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     public function test_current_page_url_valid_on_post_type_archive() {
@@ -171,7 +167,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     public function test_current_page_url_valid_on_custom_post_type_archive() {
@@ -179,7 +175,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     public function test_current_page_url_valid_on_single_post() {
@@ -187,7 +183,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_permalink( $post_id );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     public function test_current_page_url_valid_on_single_custom_post() {
@@ -195,7 +191,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_permalink( $post_id );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     public function test_current_page_url_valid_on_category_archive() {
@@ -203,7 +199,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_term_link( 1, 'category' );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     public function test_current_page_url_valid_on_custom_tax_term_archive() {
@@ -211,7 +207,7 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_term_link( 'basic', 'level' );
         $this->go_to( $url );
-        $this->assertSame( $url, $this->page->url( true ) );
+        $this->assertSame( $url, ( new Page() )->url( true ) );
     }
 
     // ----------
@@ -220,7 +216,7 @@ class Page_Test extends \WP_UnitTestCase {
         $post_id = $this->tutorial_ids[ \array_rand( $this->tutorial_ids ) ];
         
         $this->go_to( \get_permalink( $post_id ) );
-        $this->assertSame( $this->page->description(), \get_the_excerpt( $post_id ) );
+        $this->assertSame( ( new Page() )->description(), \get_the_excerpt( $post_id ) );
     }
 
     public function test_page_title_works_on_cutom_post_type_archive() {
@@ -228,6 +224,6 @@ class Page_Test extends \WP_UnitTestCase {
 
         $url = \get_post_type_archive_link( \get_post_type( $post_id ) );
         $this->go_to( $url );
-        $this->assertSame( $this->page->title(), \get_the_archive_title() );
+        $this->assertSame( ( new Page() )->title(), \get_the_archive_title() );
     }
 }

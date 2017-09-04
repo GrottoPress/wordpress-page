@@ -34,7 +34,7 @@ Instantiate a new WordPress page and use thus:
     if ( $wp_page->is( 'single' ) ) {
         echo 'Single!';
     } else {
-        echo 'Not single :-)';
+        echo 'Not single :(';
     }
 
     // Check if page is 'tutorial' custom post archive

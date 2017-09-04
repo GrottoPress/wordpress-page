@@ -4,13 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased 0.2.1 -
+## 0.2.1 - 2017-09-04
 ### Added
-- Prevented multiple calls to database when methods called multiple times.
+- Added ability to get current page number.
 
-## Unreleased 0.2.1 - 
-### Added
-- Added ability to retrieve current page number.
+### Changes
+- Prevented multiple calls to database when methods called multiple times.
 
 ## 0.2.0 - 2017-08-13
 ### Changed

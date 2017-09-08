@@ -13,7 +13,7 @@
 
 declare ( strict_types = 1 );
 
-namespace GrottoPress\WordPress\Page\Tests;
+namespace GrottoPress\WordPress\Page;
 
 use GrottoPress\WordPress\Page\Page;
 

@@ -13,24 +13,23 @@
  * @author N Atta Kus Adusei
  */
 
-declare ( strict_types = 1 );
+declare (strict_types = 1);
 
 namespace GrottoPress\WordPress\Page;
-
-if ( \defined( 'WPINC' ) ) :
 
 /**
  * WordPress Page.
  *
  * @since 0.1.0
  */
-class Page {
+class Page
+{
     /**
      * Type
      *
      * @since 0.1.0
      * @access protected
-     * 
+     *
      * @var array $type Page type.
      */
     protected $type = null;
@@ -40,7 +39,7 @@ class Page {
      *
      * @since 0.1.0
      * @access protected
-     * 
+     *
      * @var string $title Page title.
      */
     protected $title = null;
@@ -50,7 +49,7 @@ class Page {
      *
      * @since 0.1.0
      * @access protected
-     * 
+     *
      * @var string $description Page description.
      */
     protected $description = null;
@@ -60,7 +59,7 @@ class Page {
      *
      * @since 0.1.0
      * @access protected
-     * 
+     *
      * @var string $url Page URL.
      */
     protected $url = null;
@@ -70,27 +69,28 @@ class Page {
      *
      * @since 0.1.0
      * @access protected
-     * 
+     *
      * @var int $number Current page number.
      */
     protected $number = null;
 
     /**
      * Get page type
-     * 
+     *
      * @since 0.1.0
      * @access public
-     * 
+     *
      * @return array Page type.
      */
-    public function type(): array {
-        if ( null === $this->type ) {
-            if ( ! ( $types = $this->types() ) ) {
+    public function type(): array
+    {
+        if (null === $this->type) {
+            if (!($types = $this->types())) {
                 return [];
             }
 
-            foreach ( $types as $type ) {
-                if ( $this->is( $type ) ) {
+            foreach ($types as $type) {
+                if ($this->is($type)) {
                     $this->type[] = $type;
                 }
             }
@@ -101,24 +101,28 @@ class Page {
 
     /**
      * Get page title
-     * 
+     *
      * @since 0.1.0
      * @access public
-     * 
+     *
      * @return string Page title
      */
-    public function title(): string {
-        if ( null === $this->title ) {
+    public function title(): string
+    {
+        if (null === $this->title) {
             $this->title = '';
 
-            if ( $this->is( 'singular' ) ) {
-                $this->title = \single_post_title( '', false );
-            } elseif ( $this->is( 'archive' ) ) {
+            if ($this->is('singular')) {
+                $this->title = \single_post_title('', false);
+            } elseif ($this->is('archive')) {
                 $this->title = \get_the_archive_title();
-            } elseif ( $this->is( 'search' ) ) {
-                $this->title = \sprintf( \esc_html__( 'Search results: "%s"', 'wordpress-page' ), \get_search_query() );
-            } elseif ( $this->is( '404' ) ) {
-                $this->title = \esc_html__( 'Not found', 'wordpress-page' );
+            } elseif ($this->is('search')) {
+                $this->title = \sprintf(
+                    \esc_html__('Search results: "%s"', 'wordpress-page'),
+                    \get_search_query()
+                );
+            } elseif ($this->is('404')) {
+                $this->title = \esc_html__('Not found', 'wordpress-page');
             }
         }
 
@@ -133,13 +137,14 @@ class Page {
      *
      * @return string Description.
      */
-    public function description(): string {
-        if ( null === $this->description ) {
+    public function description(): string
+    {
+        if (null === $this->description) {
             $this->description = '';
 
-            if ( $this->is( 'singular' ) ) {
+            if ($this->is('singular')) {
                 $this->description = \get_the_excerpt();
-            } elseif ( $this->is( 'archive' ) ) {
+            } elseif ($this->is('archive')) {
                 $this->description = \get_the_archive_description();
             }
         }
@@ -157,20 +162,21 @@ class Page {
      *
      * @return string URL of page we're currently on.
      */
-    public function url( bool $query_string = false ): string {
-        if ( null === $this->url ) {
-            $parsed = \wp_parse_url( ( $home_url = \home_url() ) . $_SERVER['REQUEST_URI'] );
+    public function url(bool $query_string = false): string
+    {
+        if (null === $this->url) {
+            $parsed = \wp_parse_url(($home_url = \home_url()).$_SERVER['REQUEST_URI']);
 
             $path = $parsed['path'] ?? '';
-            $query = isset( $parsed['query'] ) ? '?' . $parsed['query'] : '';
+            $query = isset($parsed['query']) ? '?'.$parsed['query'] : '';
         
-            $this->url = $home_url . $path;
+            $this->url = $home_url.$path;
         
-            if ( $query_string ) {
+            if ($query_string) {
                 $this->url .= $query;
             }
 
-            $this->url = \esc_url_raw( $this->url );
+            $this->url = \esc_url_raw($this->url);
         }
     
         return $this->url;
@@ -184,9 +190,10 @@ class Page {
      *
      * @return int Current page number.
      */
-    public function number(): int {
-        if ( null === $this->number ) {
-            if ( ( $number = absint( \get_query_var( 'paged' ) ) ) ) {
+    public function number(): int
+    {
+        if (null === $this->number) {
+            if (($number = absint(\get_query_var('paged')))) {
                 $this->number = $number;
             } else {
                 $this->number = 1;
@@ -198,50 +205,52 @@ class Page {
 
     /**
      * Are we on a particular page type?
-     * 
+     *
      * @param string $type Page name/slug
-     * 
+     *
      * @since Jentil 0.1.0
      * @access public
      *
      * @return boolean Whether or not current page is of a given type.
      */
-    public function is( string $type ): bool {
-        if ( ! \in_array( $type, $this->types() ) ) {
+    public function is(string $type): bool
+    {
+        if (!\in_array($type, $this->types())) {
             return false;
         }
 
         global $pagenow;
 
-        if ( 'login' == $type ) {
-            return ( $pagenow === 'wp-login.php' );
+        if ('login' == $type) {
+            return ($pagenow === 'wp-login.php');
         }
 
-        if ( 'register' == $type ) {
-            return ( $pagenow === 'wp-signup.php' );
+        if ('register' == $type) {
+            return ($pagenow === 'wp-signup.php');
         }
 
-        $is_type = 'is_' . $type;
+        $is_type = 'is_'.$type;
 
-        if ( ! \is_callable( $is_type ) ) {
+        if (!\is_callable($is_type)) {
             return false;
         }
 
         $args = \func_get_args();
-        \array_shift( $args );
+        \array_shift($args);
         
-        return \call_user_func_array( $is_type, $args );
+        return \call_user_func_array($is_type, $args);
     }
 
     /**
      * All page types
-     * 
+     *
      * @since 0.1.0
      * @access protected
      *
      * @return array page types
      */
-    protected function types(): array {
+    protected function types(): array
+    {
         return [
             'home',
             'front_page',
@@ -270,5 +279,3 @@ class Page {
         ];
     }
 }
-
-endif;

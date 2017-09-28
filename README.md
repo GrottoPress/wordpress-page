@@ -19,26 +19,32 @@ Instantiate a new WordPress page and use thus:
     use GrottoPress\WordPress\Page\Page;
 
     // Instantiate
-    $wp_page = new Page();
+    $page = new Page();
 
     // Get page title
-    echo $wp_page->title();
+    echo $page->title();
 
     // Get page description
-    echo $wp_page->description();
+    echo $page->description();
+
+    // Get page URL
+    echo $page->URL('full');
+
+    // Get page number
+    echo $page->number();
 
     // Get page type
-    print_r( $wp_page->type() );
+    print_r($page->type());
 
     // Check if page is single post
-    if ( $wp_page->is( 'single' ) ) {
+    if ($page->is('single')) {
         echo 'Single!';
     } else {
         echo 'Not single :(';
     }
 
     // Check if page is 'tutorial' custom post archive
-    if ( $wp_page->is( 'post_type_archive', 'tutorial' ) ) {
+    if ($page->is('post_type_archive', 'tutorial')) {
         echo 'Yay!!! Tutorials.';
     } else {
         echo 'Nope :(';

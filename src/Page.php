@@ -25,56 +25,6 @@ namespace GrottoPress\WordPress\Page;
 class Page
 {
     /**
-     * Type
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var array $type Page type.
-     */
-    protected $type = null;
-
-    /**
-     * Title
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $title Page title.
-     */
-    protected $title = null;
-
-    /**
-     * Description
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $description Page description.
-     */
-    protected $description = null;
-
-    /**
-     * URL
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $url Page URL.
-     */
-    protected $url = null;
-
-    /**
-     * Number
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var int $number Current page number.
-     */
-    protected $number = null;
-
-    /**
      * Get page type
      *
      * @since 0.1.0
@@ -84,19 +34,19 @@ class Page
      */
     public function type(): array
     {
-        if (null === $this->type) {
-            if (!($types = $this->types())) {
-                return [];
-            }
+        if (!($pages = $this->types())) {
+            return [];
+        }
 
-            foreach ($types as $type) {
-                if ($this->is($type)) {
-                    $this->type[] = $type;
-                }
+        $type = [];
+
+        foreach ($pages as $page) {
+            if ($this->is($page)) {
+                $type[] = $page;
             }
         }
 
-        return $this->type;
+        return $type;
     }
 
     /**
@@ -109,24 +59,26 @@ class Page
      */
     public function title(): string
     {
-        if (null === $this->title) {
-            $this->title = '';
-
-            if ($this->is('singular')) {
-                $this->title = \single_post_title('', false);
-            } elseif ($this->is('archive')) {
-                $this->title = \get_the_archive_title();
-            } elseif ($this->is('search')) {
-                $this->title = \sprintf(
-                    \esc_html__('Search results: "%s"', 'wordpress-page'),
-                    \get_search_query()
-                );
-            } elseif ($this->is('404')) {
-                $this->title = \esc_html__('Not found', 'wordpress-page');
-            }
+        if ($this->is('singular')) {
+            return \single_post_title('', false);
+        }
+        
+        if ($this->is('archive')) {
+            return \get_the_archive_title();
+        }
+        
+        if ($this->is('search')) {
+            return \sprintf(
+                \esc_html__('Search results: "%s"'),
+                \get_search_query()
+            );
+        }
+        
+        if ($this->is('404')) {
+            return \esc_html__('Not found');
         }
 
-        return $this->title;
+        return '';
     }
 
     /**
@@ -139,47 +91,43 @@ class Page
      */
     public function description(): string
     {
-        if (null === $this->description) {
-            $this->description = '';
-
-            if ($this->is('singular')) {
-                $this->description = \get_the_excerpt();
-            } elseif ($this->is('archive')) {
-                $this->description = \get_the_archive_description();
-            }
+        if ($this->is('singular')) {
+            return \get_the_excerpt();
+        }
+        
+        if ($this->is('archive')) {
+            return \get_the_archive_description();
         }
 
-        return $this->description;
+        return '';
     }
 
     /**
-     * Current page URL
+     * Get current page URL
      *
-     * @param boolean $query_string Append query string?
+     * @param string $type Use 'full' to include query.
      *
      * @since 0.1.0
      * @access public
      *
      * @return string URL of page we're currently on.
      */
-    public function url(bool $query_string = false): string
+    public function URL(string $type = ''): string
     {
-        if (null === $this->url) {
-            $parsed = \wp_parse_url(($home_url = \home_url()).$_SERVER['REQUEST_URI']);
+        $parsed = \wp_parse_url(
+            ($home_url = \home_url()).$_SERVER['REQUEST_URI']
+        );
 
-            $path = $parsed['path'] ?? '';
-            $query = isset($parsed['query']) ? '?'.$parsed['query'] : '';
-        
-            $this->url = $home_url.$path;
-        
-            if ($query_string) {
-                $this->url .= $query;
-            }
-
-            $this->url = \esc_url_raw($this->url);
-        }
+        $path = $parsed['path'] ?? '';
+        $query = isset($parsed['query']) ? '?'.$parsed['query'] : '';
     
-        return $this->url;
+        $url = $home_url.$path;
+    
+        if ('full' == $type) {
+            $url .= $query;
+        }
+
+        return \esc_url_raw($url);
     }
 
     /**

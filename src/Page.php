@@ -140,15 +140,11 @@ class Page
      */
     public function number(): int
     {
-        if (null === $this->number) {
-            if (($number = absint(\get_query_var('paged')))) {
-                $this->number = $number;
-            } else {
-                $this->number = 1;
-            }
+        if (($number = \absint(\get_query_var('paged')))) {
+            return $number;
         }
-    
-        return $this->number;
+        
+        return 1;
     }
 
     /**

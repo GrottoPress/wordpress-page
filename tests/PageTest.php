@@ -255,4 +255,18 @@ class PageTest extends \WP_UnitTestCase
         $this->go_to($url);
         $this->assertSame($this->page->title(), \get_the_archive_title());
     }
+
+    // ---
+
+    public function testPageNumberWorksOnCustomPostTypeArchive()
+    {
+        $post_id = $this->tutorial_ids[\array_rand($this->tutorial_ids)];
+        
+        $url = \get_post_type_archive_link(\get_post_type($post_id));
+        $this->go_to($url);
+        $url = \get_pagenum_link(2, false);
+        $this->go_to($url);
+        
+        $this->assertSame($this->page->number(), 2);
+    }
 }

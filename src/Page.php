@@ -123,7 +123,7 @@ class Page
     
         $url = $home_url.$path;
     
-        if ('full' == $type) {
+        if ('full' === $type) {
             $url .= $query;
         }
 
@@ -165,11 +165,11 @@ class Page
 
         global $pagenow;
 
-        if ('login' == $type) {
+        if ('login' === $type) {
             return ($pagenow === 'wp-login.php');
         }
 
-        if ('register' == $type) {
+        if ('register' === $type) {
             return ($pagenow === 'wp-signup.php');
         }
 

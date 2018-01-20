@@ -124,6 +124,7 @@ class PageTest extends \WP_UnitTestCase
         $url = \get_permalink($post_id);
         $this->go_to($url);
         $this->assertSame(['single', 'singular'], $this->page->type());
+        $this->assertFalse($this->page->is('page_template'));
     }
 
     public function testCurrentPageTypeValidOnSingleAttahment()
@@ -136,6 +137,7 @@ class PageTest extends \WP_UnitTestCase
             ['single', 'attachment', 'singular'],
             $this->page->type()
         );
+        $this->assertFalse($this->page->is('page_template'));
     }
 
     public function testCurrentPageTypeValidOnSingleCustomPost()
@@ -145,6 +147,23 @@ class PageTest extends \WP_UnitTestCase
         $url = \get_permalink($post_id);
         $this->go_to($url);
         $this->assertSame(['single', 'singular'], $this->page->type());
+        $this->assertTrue($this->page->is('singular', 'tutorial'));
+        $this->assertFalse($this->page->is('page_template'));
+    }
+
+    public function testCurrentPageTypeValidOnCustomTemplate()
+    {
+        $post_id = $this->tutorial_ids[\array_rand($this->tutorial_ids)];
+
+        \update_post_meta($post_id, '_wp_page_template', 'custom-template.php');
+
+        $url = \get_permalink($post_id);
+        $this->go_to($url);
+        $this->assertContains('page_template', $this->page->type());
+        $this->assertTrue($this->page->is(
+            'page_template',
+            'custom-template.php'
+        ));
     }
 
     public function testCurrentPageTypeValidOnCategoryArchive()

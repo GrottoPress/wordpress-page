@@ -26,6 +26,14 @@
     "require-dev": {
         "phpunit/phpunit": "^6.3"
     },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ],
+        "release": [
+            "./bin/release"
+        ]
+    },
     "autoload": {
         "psr-4": { "GrottoPress\\WordPress\\Page\\": "src/" }
     },

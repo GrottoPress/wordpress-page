@@ -200,6 +200,7 @@ class Page
             'front_page',
             'single',
             'page',
+            'page_template',
             'attachment',
             'singular',
             'author',

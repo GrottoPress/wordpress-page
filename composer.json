@@ -26,18 +26,21 @@
     "require-dev": {
         "codeception/codeception": "^2.4"
     },
-    "scripts": {
-        "test": [
-            "phpunit"
-        ],
-        "release": [
-            "./bin/release"
-        ]
-    },
     "autoload": {
         "psr-4": { "GrottoPress\\WordPress\\Page\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": { "GrottoPress\\WordPress\\Page\\": "tests/" }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod +x ./bin/*"
+        ],
+        "test": [
+            "./vendor/bin/codecept run unit"
+        ],
+        "release": [
+            "./bin/release"
+        ]
     }
 }

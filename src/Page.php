@@ -157,7 +157,7 @@ class Page
      *
      * @return boolean Whether or not current page is of a given type.
      */
-    public function is(string $type): bool
+    public function is(string $type, ...$args): bool
     {
         if (!\in_array($type, $this->types())) {
             return false;
@@ -179,10 +179,7 @@ class Page
             return false;
         }
 
-        $args = \func_get_args();
-        \array_shift($args);
-        
-        return \call_user_func_array($is_type, $args);
+        return $is_type(...$args);
     }
 
     /**

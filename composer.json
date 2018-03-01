@@ -1,6 +1,6 @@
 {
     "name": "grottopress/wordpress-page",
-    "description": "A library to get WordPress page elements",
+    "description": "Get current page in WordPress",
     "license": "MIT",
     "authors": [
         {
@@ -24,7 +24,7 @@
         "php": ">=7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.3"
+        "codeception/codeception": "^2.4"
     },
     "scripts": {
         "test": [

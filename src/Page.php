@@ -142,6 +142,7 @@ class Page
             'admin',
             'login',
             'register',
+            'feed',
         ];
     }
 }

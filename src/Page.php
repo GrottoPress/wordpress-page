@@ -27,18 +27,18 @@ class Page
         if ($this->is('singular')) {
             return \single_post_title('', false);
         }
-        
+
         if ($this->is('archive')) {
             return \get_the_archive_title();
         }
-        
+
         if ($this->is('search')) {
             return \sprintf(
                 \esc_html__('Search results: "%s"'),
                 \get_search_query()
             );
         }
-        
+
         if ($this->is('404')) {
             return \esc_html__('Not found');
         }
@@ -51,7 +51,7 @@ class Page
         if ($this->is('singular')) {
             return \get_the_excerpt();
         }
-        
+
         if ($this->is('archive')) {
             return \get_the_archive_description();
         }
@@ -67,9 +67,9 @@ class Page
 
         $path = $parsed['path'] ?? '';
         $query = isset($parsed['query']) ? '?'.$parsed['query'] : '';
-    
+
         $url = $home_url.$path;
-    
+
         if ('full' === $type) {
             $url .= $query;
         }
@@ -82,7 +82,7 @@ class Page
         if (($number = \absint(\get_query_var('paged')))) {
             return $number;
         }
-        
+
         return 1;
     }
 

@@ -1,6 +1,6 @@
 {
     "name": "grottopress/wordpress-page",
-    "description": "A library to get WordPress page elements",
+    "description": "Get current page in WordPress",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,9 @@
           "role": "Developer"
         }
     ],
-    "keywords": [ "wordpress" ],
+    "keywords": [
+        "wordpress"
+    ],
     "support": {
         "issues": "https://github.com/GrottoPress/wordpress-page/issues",
         "wiki": "https://github.com/GrottoPress/wordpress-page/wiki",
@@ -24,20 +26,28 @@
         "php": ">=7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.3"
+        "codeception/codeception": "^2.4",
+        "lucatume/function-mocker": "^1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "GrottoPress\\WordPress\\Page\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GrottoPress\\WordPress\\Page\\": "tests/unit/src/"
+        }
     },
     "scripts": {
+        "post-install-cmd": [
+            "chmod +x ./bin/*"
+        ],
         "test": [
-            "phpunit"
+            "./vendor/bin/codecept run unit"
         ],
         "release": [
             "./bin/release"
         ]
-    },
-    "autoload": {
-        "psr-4": { "GrottoPress\\WordPress\\Page\\": "src/" }
-    },
-    "autoload-dev": {
-        "psr-4": { "GrottoPress\\WordPress\\Page\\": "tests/" }
     }
 }

@@ -114,7 +114,7 @@ class Page
         return $is_type(...$args);
     }
 
-    protected function types(): array
+    private function types(): array
     {
         return [
             'home',

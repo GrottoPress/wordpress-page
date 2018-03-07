@@ -1,51 +1,54 @@
 # WordPress Page
 
-## Description
-
-*WordPress Page* is a simple library to get WordPress page elements.
-
-Note that page as used here refers to page as in 'web page', NOT the page post type in WordPress.
+Get current page attributes in WordPress.
 
 ## Usage
 
 Install via composer:
 
-`composer require grottopress/wordpress-page`
+```bash
+composer require grottopress/wordpress-page
+```
 
-Instantiate a new WordPress page and use thus:
+Use thus:
 
-    <?php
+```php
+<?php
+declare (strict_types = 1);
 
-    use GrottoPress\WordPress\Page\Page;
+use GrottoPress\WordPress\Page\Page;
 
-    // Instantiate
-    $page = new Page();
+// Instantiate
+$page = new Page();
 
-    // Get page title
-    echo $page->title();
+// `$page` now represents the current page (where it was instantiated)
 
-    // Get page description
-    echo $page->description();
+// Get page title
+echo $page->title();
 
-    // Get page URL
-    echo $page->URL('full');
+// Get page description
+echo $page->description();
 
-    // Get page number
-    echo $page->number();
+// Get page URL
+echo $page->URL('full');
 
-    // Get page type
-    print_r($page->type());
+// Get page number
+echo $page->number();
 
-    // Check if page is single post
-    if ($page->is('single')) {
-        echo 'Single!';
-    } else {
-        echo 'Not single :(';
-    }
+// Get page type
+print_r($page->type());
 
-    // Check if page is 'tutorial' custom post archive
-    if ($page->is('post_type_archive', 'tutorial')) {
-        echo 'Yay!!! Tutorials.';
-    } else {
-        echo 'Nope :(';
-    }
+// Check if page is single post
+if ($page->is('single')) {
+    echo 'Single!';
+} else {
+    echo 'Not single :(';
+}
+
+// Check if page is 'tutorial' custom post archive
+if ($page->is('post_type_archive', 'tutorial')) {
+    echo 'Yay!!! Tutorials.';
+} else {
+    echo 'Nope :(';
+}
+```

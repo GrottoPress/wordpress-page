@@ -1,6 +1,6 @@
 {
     "name": "grottopress/wordpress-page",
-    "description": "Get current page in WordPress",
+    "description": "Get current page attributes in WordPress",
     "license": "MIT",
     "authors": [
         {

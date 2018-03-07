@@ -105,7 +105,7 @@ class Page
             return ($pagenow === 'wp-signup.php');
         }
 
-        $is_type = 'is_'.$type;
+        $is_type = "is_{$type}";
 
         if (!\is_callable($is_type)) {
             return false;

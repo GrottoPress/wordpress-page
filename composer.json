@@ -31,12 +31,12 @@
   },
   "autoload": {
     "psr-4": {
-      "GrottoPress\\WordPress\\Page\\": "src/"
+      "GrottoPress\\WordPress\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "GrottoPress\\WordPress\\Page\\": "tests/unit/src/"
+      "GrottoPress\\WordPress\\": "tests/unit/src/"
     }
   },
   "scripts": {

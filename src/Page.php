@@ -5,6 +5,9 @@ namespace GrottoPress\WordPress\Page;
 
 class Page
 {
+    /**
+     * @return string[int]
+     */
     public function type(): array
     {
         if (!($pages = $this->types())) {
@@ -86,9 +89,6 @@ class Page
         return 1;
     }
 
-    /**
-     * Are we on a particular page type?
-     */
     public function is(string $type, ...$args): bool
     {
         if (!\in_array($type, $this->types())) {
@@ -114,6 +114,9 @@ class Page
         return $is_type(...$args);
     }
 
+    /**
+     * @return string[int]
+     */
     protected function types(): array
     {
         return [

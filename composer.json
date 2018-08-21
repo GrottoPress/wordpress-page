@@ -1,53 +1,53 @@
 {
-    "name": "grottopress/wordpress-page",
-    "description": "Get current page attributes in WordPress",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "GrottoPress.com",
-            "email": "info@grottopress.com",
-            "homepage": "https://www.grottopress.com"
-        },
-        {
-          "name": "N Atta Kusi Adusei",
-          "homepage": "https://twitter.com/akadusei",
-          "role": "Developer"
-        }
-    ],
-    "keywords": [
-        "wordpress"
-    ],
-    "support": {
-        "issues": "https://github.com/GrottoPress/wordpress-page/issues",
-        "wiki": "https://github.com/GrottoPress/wordpress-page/wiki",
-        "source": "https://github.com/GrottoPress/wordpress-page/"
+  "name": "grottopress/wordpress-page",
+  "description": "Get current page attributes in WordPress",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "GrottoPress.com",
+      "email": "info@grottopress.com",
+      "homepage": "https://www.grottopress.com"
     },
-    "require": {
-        "php": ">=7.0"
-    },
-    "require-dev": {
-        "codeception/codeception": "^2.4",
-        "lucatume/function-mocker": "^1.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "GrottoPress\\WordPress\\Page\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "GrottoPress\\WordPress\\Page\\": "tests/unit/src/"
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "chmod +x ./bin/*"
-        ],
-        "test": [
-            "./vendor/bin/codecept run unit"
-        ],
-        "release": [
-            "./bin/release"
-        ]
+    {
+      "name": "N Atta Kusi Adusei",
+      "homepage": "https://twitter.com/akadusei",
+      "role": "Developer"
     }
+  ],
+  "keywords": [
+    "wordpress"
+  ],
+  "support": {
+    "issues": "https://github.com/GrottoPress/wordpress-page/issues",
+    "wiki": "https://github.com/GrottoPress/wordpress-page/wiki",
+    "source": "https://github.com/GrottoPress/wordpress-page/"
+  },
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "codeception/codeception": "^2.4",
+    "lucatume/function-mocker": "^1.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "GrottoPress\\WordPress\\Page\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GrottoPress\\WordPress\\Page\\": "tests/unit/src/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "chmod +x ./bin/*"
+    ],
+    "test": [
+      "./vendor/bin/codecept run unit"
+    ],
+    "release": [
+      "./bin/release"
+    ]
+  }
 }

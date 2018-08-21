@@ -16,7 +16,7 @@ Use thus:
 <?php
 declare (strict_types = 1);
 
-use GrottoPress\WordPress\Page\Page;
+use GrottoPress\WordPress\Page;
 
 // Instantiate
 $page = new Page();

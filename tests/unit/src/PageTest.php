@@ -1,8 +1,9 @@
 <?php
 declare (strict_types = 1);
 
-namespace GrottoPress\WordPress\Page;
+namespace GrottoPress\WordPress;
 
+use GrottoPress\WordPress\Page\AbstractTestCase;
 use Codeception\Util\Stub;
 use tad\FunctionMocker\FunctionMocker;
 

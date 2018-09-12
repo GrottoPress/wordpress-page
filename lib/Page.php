@@ -10,19 +10,9 @@ class Page
      */
     public function type(): array
     {
-        if (!($pages = $this->types())) {
-            return [];
-        }
-
-        $type = [];
-
-        foreach ($pages as $page) {
-            if ($this->is($page)) {
-                $type[] = $page;
-            }
-        }
-
-        return $type;
+        return \array_filter($this->types(), function (string $page): bool {
+            return $this->is($page);
+        });
     }
 
     public function title(): string

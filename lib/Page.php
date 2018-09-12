@@ -10,19 +10,9 @@ class Page
      */
     public function type(): array
     {
-        if (!($pages = $this->types())) {
-            return [];
-        }
-
-        $type = [];
-
-        foreach ($pages as $page) {
-            if ($this->is($page)) {
-                $type[] = $page;
-            }
-        }
-
-        return $type;
+        return \array_filter($this->types(), function (string $page): bool {
+            return $this->is($page);
+        });
     }
 
     public function title(): string
@@ -37,13 +27,13 @@ class Page
 
         if ($this->is('search')) {
             return \sprintf(
-                \esc_html__('Search results: "%s"'),
+                \esc_html__('Search results: "%s"', 'grotto-wp-page'),
                 \get_search_query()
             );
         }
 
         if ($this->is('404')) {
-            return \esc_html__('Not found');
+            return \esc_html__('Not found', 'grotto-wp-page');
         }
 
         return '';

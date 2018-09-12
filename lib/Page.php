@@ -37,13 +37,13 @@ class Page
 
         if ($this->is('search')) {
             return \sprintf(
-                \esc_html__('Search results: "%s"'),
+                \esc_html__('Search results: "%s"', 'grotto-wp-page'),
                 \get_search_query()
             );
         }
 
         if ($this->is('404')) {
-            return \esc_html__('Not found');
+            return \esc_html__('Not found', 'grotto-wp-page');
         }
 
         return '';

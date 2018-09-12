@@ -1,0 +1,42 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Page\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-11 19:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lib/Page.php:40
+msgid "Search results: \"%s\""
+msgstr ""
+
+#: lib/Page.php:46
+msgid "Not found"
+msgstr ""
+
+#. Name
+msgid "WordPress Page"
+msgstr ""
+
+#. Description
+msgid "Get current page attributes in WordPress"
+msgstr ""
+
+#. URI
+msgid "https://github.com/grottopress/wordpress-page/"
+msgstr ""
+
+#. Author
+msgid "GrottoPress"
+msgstr ""
+
+#. Author URI
+msgid "https://www.grottopress.com"
+msgstr ""

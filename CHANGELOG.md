@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 ### Added
--  Add `.editorconfig`
+- Add `.editorconfig`
+- Add translations template
 
 ### Changed
 - Rename `src/` directory to `lib/`

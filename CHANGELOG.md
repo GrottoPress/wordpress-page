@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Rename `LICENSE.md` TO `LICENSE`
+- Move `lang/` and `lib/` under a new `src/` directory
 
 ## 0.7.1 - 2018-09-12
 

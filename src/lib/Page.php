@@ -6,7 +6,7 @@ namespace GrottoPress\WordPress;
 class Page
 {
     /**
-     * @return string[int]
+     * @return string[]
      */
     public function type(): array
     {
@@ -105,7 +105,7 @@ class Page
     }
 
     /**
-     * @return string[int]
+     * @return string[]
      */
     protected function types(): array
     {

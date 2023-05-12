@@ -124,6 +124,7 @@ class Page
             'year',
             'date',
             'post_type_archive',
+            'privacy_policy',
             'tag',
             'tax',
             'archive',
